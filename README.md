@@ -1,6 +1,6 @@
 # Blankout
 
-A blank screen PWP.
+A blank screen PWA.
 
 Blank out your monitor can improve your focus, reduce distraction, reduce eye fatigue, save screen, and much more.
 
