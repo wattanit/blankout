@@ -1,24 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
+
+  const [showControl, setShowControl] = useState(true)
+  const [lastActivityEpoch, setLastActivityEpoch] = useState((new Date()).getTime())
+  const [lastRestEpoch, setLastRestEpoch] = useState(0)
+  const [totalInactiveEpoch, setTotalInactiveEpoch] = useState(0)
+
+  const mouseMoveHandler = (_: any)=>{
+    setShowControl(true)
+    setLastActivityEpoch((new Date()).getTime())
+    if (lastRestEpoch!==0){
+      const currentTime = (new Date()).getTime()
+      setTotalInactiveEpoch(totalInactiveEpoch + (currentTime - lastRestEpoch))
+      setLastRestEpoch(0)
+    }
+  }
+
+  const mouseStopChecker = ()=>{
+    const currentTime = (new Date()).getTime()
+    const inactiveEpoch = (currentTime - lastActivityEpoch)
+    if (inactiveEpoch>5000){
+      setShowControl(false)
+      if (lastRestEpoch === 0){
+        setLastRestEpoch(currentTime)
+      }
+    }
+  }
+
+  useEffect(()=>{
+    const controlTimeout = setTimeout(()=>{
+      setShowControl(false)
+    }, 5000)
+    const checkerInterval = setInterval(mouseStopChecker, 1000)
+    return ()=>{
+      clearInterval(checkerInterval)
+      clearTimeout(controlTimeout)
+    }
+  })
+
+  const platform = (['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'].includes(window.navigator.platform))?"Mac": "Windows"
+
+  const control = <div className={(showControl)?"Control":"Control hide"}>
+    Press {(platform==="Mac")?"^⌘F": "F11"} to enter fullscreen
+  </div>
+
+  const restTimeHour = Math.floor(totalInactiveEpoch/(60*60*1000))
+  const restTimeMinutes = Math.floor((totalInactiveEpoch/(60*1000))%60)
+  const restTimeSeconds = Math.floor((totalInactiveEpoch/1000)%(60))
+
+  const restCounter = (totalInactiveEpoch > 60000)?<div className={(showControl)?"RestCounter":"RestCounter hide"}>
+    At rest for {restTimeHour} H : {restTimeMinutes} M : {restTimeSeconds} S
+  </div>:null
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App"
+         onMouseMove={mouseMoveHandler}
+    >
+      {restCounter}
+      {control}
     </div>
   );
 }
