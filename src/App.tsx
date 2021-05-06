@@ -57,6 +57,7 @@ function App() {
   const getAppButton = <a className={(showControl)?"GetAppButton":"GetAppButton hide"}
                           href={"https://github.com/wattanit/blankout/releases/tag/desktop-0.1"}
                           target={"_blank"}
+                          rel={"noopener noreferrer"}
   >
     Get Desktop App
   </a>
