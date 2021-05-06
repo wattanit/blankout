@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-build": "electron-builder",
+    "electron-build": "electron-builder --mac --win",
     "desktop-release": "npm run build && electron-builder --publish=always",
     "desktop-build": "npm run build && npm run electron-build",
     "desktop-start": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\""
@@ -55,7 +55,15 @@
     ]
   },
   "build": {
-    "appId": "com.quasaris.blankout"
+    "appId": "com.quasaris.blankout",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "build/icon.png"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.ico"
+    }
   },
   "main": "public/electron.js",
   "homepage": "./",
