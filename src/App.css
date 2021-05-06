@@ -43,3 +43,27 @@
   opacity: 0;
 }
 
+.GetAppButton {
+  color: #888888;
+  font-size: 1.0em;
+  text-decoration: none;
+  padding: 10px;
+  border-style: solid;
+  border-color: #888888;
+  border-width: 1px;
+  position: fixed;
+  top: 2vh;
+  right: 2vw;
+  opacity: 1;
+  -webkit-transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -o-transition: opacity 2s ease-in-out;
+}
+.GetAppButton:hover{
+  color: #aaaaaa;
+  border-color: #aaaaaa;
+  cursor: pointer;
+}
+.GetAppButton.hide{
+  opacity: 0;
+}

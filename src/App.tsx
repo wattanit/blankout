@@ -54,10 +54,18 @@ function App() {
     At rest for {restTimeHour} H : {restTimeMinutes} M : {restTimeSeconds} S
   </div>:null
 
+  const getAppButton = <a className={(showControl)?"GetAppButton":"GetAppButton hide"}
+                          href={"https://github.com/wattanit/blankout/releases/tag/desktop-0.1"}
+                          target={"_blank"}
+  >
+    Get Desktop App
+  </a>
+
   return (
     <div className="App"
          onMouseMove={mouseMoveHandler}
     >
+      {getAppButton}
       {restCounter}
       {control}
     </div>
